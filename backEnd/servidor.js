@@ -48,7 +48,18 @@ app.patch("/atualizarpagamento/:id", (req,res) =>{
     res.json(veiculo);
 })
 
+app.delete("/deletarveiculo/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const index = VEICULOS.findIndex(v => v.id === id);
 
+    if (index === -1) {
+        return res.status(404).json({ erro: "Veículo não encontrado" });
+    }
+
+    VEICULOS.splice(index, 1); 
+
+    res.status(200).json({ msg: "Veículo removido com sucesso" });
+});
 app.listen(porta, () => {
     console.log(`Servidor rodando no http://localhost:${porta}`);
 });
